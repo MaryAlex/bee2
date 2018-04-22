@@ -1409,22 +1409,6 @@ err_t bakeBSTSRunA(octet key[32], const bign_params* params,
 *******************************************************************************
 */
 
-typedef struct
-{
-	obj_hdr_t hdr;				/*< заголовок */
-// ptr_table {
-	ec_o* ec;					/*< описание эллиптической кривой */
-	octet* R;					/*< [ec->f->no](Ra || Rb или ecX(Va)) */
-	word* W;					/*< [2 * ec->f->n] точка W */
-	word* u;					/*< [ec->f->n] ua или ub */
-// }
-	bake_settings settings[1];	/*< настройки */
-	octet K0[32];				/*< ключ K0 */
-	octet K1[32];				/*< ключ K1 */
-	octet K2[32];				/*< ключ K2 */
-	octet data[];				/*< данные */
-} bake_bpace_o;
-
 static size_t bakeBPACE_deep(size_t n, size_t f_deep, size_t ec_d, size_t ec_deep);
 
 size_t bakeBPACE_keep(size_t l)

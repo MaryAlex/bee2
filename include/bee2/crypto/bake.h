@@ -27,6 +27,7 @@ extern "C" {
 
 #include "bee2/defs.h"
 #include "bee2/crypto/bign.h"
+#include "bee2/math/ec.h"
 
 /*!
 *******************************************************************************
@@ -145,6 +146,25 @@ typedef struct
 	size_t len;				/*!< длина data */
 	bake_certval_i val;		/*!< функция проверки сертификата */
 } bake_cert;
+
+/**
+ * @brief bpace state
+ */
+typedef struct
+{
+	obj_hdr_t hdr;				/*< заголовок */
+// ptr_table {
+	ec_o* ec;					/*< описание эллиптической кривой */
+	octet* R;					/*< [ec->f->no](Ra || Rb или ecX(Va)) */
+	word* W;					/*< [2 * ec->f->n] точка W */
+	word* u;					/*< [ec->f->n] ua или ub */
+// }
+	bake_settings settings[1];	/*< настройки */
+	octet K0[32];				/*< ключ K0 */
+	octet K1[32];				/*< ключ K1 */
+	octet K2[32];				/*< ключ K2 */
+	octet data[];				/*< данные */
+} bake_bpace_o;
 
 /*
 *******************************************************************************
