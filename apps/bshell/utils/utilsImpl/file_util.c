@@ -2,10 +2,10 @@
 // Created by Maria Chmyreva on 3/21/18.
 //
 
-#include <bits/types/FILE.h>
 #include <malloc.h>
 #include <bee2/crypto/bake.h>
 #include <memory.h>
+#include <stdio.h>
 #include "../../constants.h"
 
 char *get_full_file_name(char *file_name) {

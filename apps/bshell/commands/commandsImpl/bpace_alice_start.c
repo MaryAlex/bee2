@@ -14,9 +14,10 @@
 char *in;
 
 err_t third_step_run(int l, bake_bpace_o *state) {
-    octet *out = malloc((size_t) SIZE_OF_ALICE_FIRST_MESSAGE(l));
+    size_t size_of_alice_first_message = (size_t) SIZE_OF_ALICE_FIRST_MESSAGE(l);
+    octet *out = malloc(size_of_alice_first_message);
     err_t code = bakeBPACEStep3(out, (const octet *) in, state);
-    CODE_CHECK(code, printAnswer("Send this: %s\n", out, (size_t) SIZE_OF_ALICE_FIRST_MESSAGE(l)))
+    CODE_CHECK(code, printAnswer("Send this: %s\n", out, size_of_alice_first_message))
     free(out);
     return code;
 }

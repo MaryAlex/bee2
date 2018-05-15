@@ -14,6 +14,32 @@
 #include <stdlib.h>
 #include "../../constants.h"
 
+static const char *possible_curve_names[] =
+/**
+ * @link Was taken from:
+ * @file: bign.c
+ * @line: 37
+ * @name bign-curve128v1
+ * @date march 18 2018
+ */
+        {"1.2.112.0.2.0.34.101.45.3.1",
+/**
+* @link Was taken from:
+* @file: bign.c
+* @line: 79
+* @name bign-curve192v1
+* @date april 21 2018
+*/
+         "1.2.112.0.2.0.34.101.45.3.2",
+/**
+* @link Was taken from:
+* @file: bign.c
+* @line: 79
+* @name bign-curve256v1
+* @date april 21 2018
+*/
+         "1.2.112.0.2.0.34.101.45.3.3"};
+
 /**
  * @brief Do memory allocation to setting and init it
  * @return reference to allocated memory
@@ -49,7 +75,7 @@ const char *get_curve_name(int l) {
 bign_params *get_params(int l) {
     bign_params *params = (bign_params *) malloc(sizeof(bign_params));
     const char *curve_name = get_curve_name(l);
-    NULL_CHECK(curve_name)
+    NULL_CHECK_FOR_POINTER_FUNCTION(curve_name)
     bignStdParams(params, curve_name);
     return params;
 };
@@ -67,15 +93,16 @@ bake_bpace_o *get_state(char *password, int l) {
 
 
 bake_bpace_o *get_state_from_file(char *password, char *file_state_name, int *l) {
+    bake_bpace_o *state;
     read_security_level_from_file(file_state_name, l);
-    bake_bpace_o *state = get_state(password, *l);
+    state = get_state(password, *l);
     if (NULL != state) {
         read_state_from_file(file_state_name, state);
     }
     return state;
 };
 
-void printAnswer(char *preface, void *answer, size_t size) {
+void printAnswer(const char *preface, void *answer, size_t size) {
     char *dest = malloc(size * OCTET_SIZE);
     hexFrom(dest, answer, size);
     printf(preface, dest);
@@ -123,11 +150,12 @@ int get_security_level_parameter(int argc, char **argv) {
 }
 
 err_t start_command_run(int argc, char **argv, char *file_state_name, err_t (*next_step)(int, bake_bpace_o *)) {
+    err_t code;
     char *password = get_required_argument_value(argc, argv, PASSWORD_PARAMETER);
     int l = get_security_level_parameter(argc, argv);
     bake_bpace_o *state = get_state(password, l);
     NULL_CHECK(state)
-    err_t code = next_step(l, state);
+    code = next_step(l, state);
     write_bpace_info_to_file(file_state_name, state, l);
     free(state);
     return code;

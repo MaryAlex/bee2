@@ -65,6 +65,6 @@ int get_security_level_parameter(int argc, char **argv);
  * @param answer - reference to bytes to output.
  * @param size - count of answer's bytes
  */
-void printAnswer(char *preface, void *answer, size_t size);
+void printAnswer(const char *preface, void *answer, size_t size);
 
 #endif //BEE2_BPACE_UTIL_H

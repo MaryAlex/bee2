@@ -28,6 +28,14 @@
     }
 
 /**
+* @brief Return NULL if NULL
+*/
+#define NULL_CHECK_FOR_POINTER_FUNCTION(variable)\
+    if (NULL == (variable)) {\
+        return NULL;\
+    }
+
+/**
  * @brief Code check and print error, if needed
  */
 #define CODE_CHECK(code, on_success)\
@@ -57,31 +65,7 @@
 
 
 static const int possible_security_levels[] = {128, 192, 256};
-static const char *possible_curve_names[] =
-/**
- * @link Was taken from:
- * @file: bign.c
- * @line: 37
- * @name bign-curve128v1
- * @date march 18 2018
- */
-        {"1.2.112.0.2.0.34.101.45.3.1",
-/**
-* @link Was taken from:
-* @file: bign.c
-* @line: 79
-* @name bign-curve192v1
-* @date april 21 2018
-*/
-         "1.2.112.0.2.0.34.101.45.3.2",
-/**
-* @link Was taken from:
-* @file: bign.c
-* @line: 79
-* @name bign-curve256v1
-* @date april 21 2018
-*/
-         "1.2.112.0.2.0.34.101.45.3.3"};
+
 static const int POSSIBLE_SECURITY_LEVELS_SIZE = 3;
 static const int DEFAULT_SECURITY_LEVEL = 128;
 

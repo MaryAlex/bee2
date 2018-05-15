@@ -8,8 +8,9 @@
 #include "../../constants.h"
 
 int print_all() {
+    int i;
     printf("\nInput commands after -- and parameters after -\n\n");
-    for (int i = 0; i < COMMANDS_LENGTH; ++i) {
+    for (i = 0; i < COMMANDS_LENGTH; ++i) {
         Command command = commands[i];
         printf("--%s  %s\n\n", command.name, command.description);
     }

@@ -10,8 +10,8 @@
 #define COMMANDS_LENGTH 5
 
 struct Command {
-    char *name;
-    char *description;
+    const char *name;
+    const char *description;
 
     /***
      * @param count of arguments that was entered and arguments

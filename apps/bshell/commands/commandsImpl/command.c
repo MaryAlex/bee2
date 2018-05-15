@@ -27,10 +27,11 @@ void init_commands() {
 }
 
 int run_command(Command command, int argc, char **argv) {
+    int code;
     if (command.is_random_needed) {
         rngCreate(NULL, NULL);
     }
-    int code = command.run(argc, argv);
+    code = command.run(argc, argv);
     if (command.is_random_needed) {
         rngClose();
     }
@@ -38,7 +39,8 @@ int run_command(Command command, int argc, char **argv) {
 }
 
 int execute_command(char *command_name, int argc, char **argv) {
-    for (int i = 0; i < COMMANDS_LENGTH; ++i) {
+    int i;
+    for (i = 0; i < COMMANDS_LENGTH; ++i) {
         Command command = commands[i];
         if (EQUALS_RETURN == strcmp(command.name, command_name)) {
             return run_command(command, argc, argv);
