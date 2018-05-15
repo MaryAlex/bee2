@@ -19,4 +19,6 @@ add_executable(bshell
         utils/file_util.h
         bshell.c commands/commandsImpl/bpace_bob_second.c commands/bpace_bob_second.h commands/commandsImpl/bpace_alice_second.c commands/bpace_alice_second.h)
 
+configure_file(demo.sh demo.sh COPYONLY)
+
 target_link_libraries(bshell bee2_static)
