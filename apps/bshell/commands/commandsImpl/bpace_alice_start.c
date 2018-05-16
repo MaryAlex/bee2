@@ -8,8 +8,13 @@
 #include <bpace_util.h>
 #include <stdio.h>
 #include <bee2/core/err.h>
-#include <malloc.h>
 #include "../../constants.h"
+
+#ifndef OS_APPLE
+    #include <malloc.h>
+#else
+    #include <stdlib.h>
+#endif
 
 char *in;
 
@@ -24,7 +29,7 @@ err_t third_step_run(int l, bake_bpace_o *state) {
 
 int bpace_alice_start_run(int argc, char **argv) {
     in = get_in_parameter(argc, argv);
-    return start_command_run(argc, argv, (char *) FILE_STATE_ALICE_NAME, third_step_run);
+    return start_command_run(argc, argv, FILE_STATE_ALICE_NAME, third_step_run);
 }
 
 const Command bpace_alice_start = {

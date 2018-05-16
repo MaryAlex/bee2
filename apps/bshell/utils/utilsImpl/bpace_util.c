@@ -2,8 +2,8 @@
 // Created by Maria Chmyreva on 3/21/18.
 //
 
+#include <stdlib.h>
 #include <bee2/crypto/bake.h>
-#include <malloc.h>
 #include <stdbool.h>
 #include <bee2/core/rng.h>
 #include <memory.h>
@@ -11,7 +11,7 @@
 #include <file_util.h>
 #include <string_util.h>
 #include <bee2/core/hex.h>
-#include <stdlib.h>
+#include <stdio.h>
 #include "../../constants.h"
 
 static const char *possible_curve_names[] =
@@ -59,7 +59,8 @@ bake_settings *get_setting() {
  * @return curve name according bign.c to use it in bignStdParams
  */
 const char *get_curve_name(int l) {
-    for (int i = 0; i < POSSIBLE_SECURITY_LEVELS_SIZE; ++i) {
+    int i;
+    for (i = 0; i < POSSIBLE_SECURITY_LEVELS_SIZE; ++i) {
         if (l == possible_security_levels[i]) {
             return possible_curve_names[i];
         }
@@ -130,7 +131,8 @@ err_t final_step_run(bake_bpace_o *state, char *file_state_name) {
  * @return is security level contains in possible_security_levels
  */
 bool is_correct_security_level(int l) {
-    for (int i = 0; i < POSSIBLE_SECURITY_LEVELS_SIZE; ++i) {
+    int i;
+    for (i = 0; i < POSSIBLE_SECURITY_LEVELS_SIZE; ++i) {
         if (l == possible_security_levels[i]) {
             return true;
         }
@@ -149,7 +151,7 @@ int get_security_level_parameter(int argc, char **argv) {
     return DEFAULT_SECURITY_LEVEL;
 }
 
-err_t start_command_run(int argc, char **argv, char *file_state_name, err_t (*next_step)(int, bake_bpace_o *)) {
+err_t start_command_run(int argc, char **argv, const char *file_state_name, err_t (*next_step)(int, bake_bpace_o *)) {
     err_t code;
     char *password = get_required_argument_value(argc, argv, PASSWORD_PARAMETER);
     int l = get_security_level_parameter(argc, argv);

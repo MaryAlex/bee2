@@ -44,7 +44,7 @@ err_t final_step_run(bake_bpace_o *state, char *file_state_name);
  * @param next_step - first step after bakeBPACEStart in bpace protocol for current side
  * @return code of error or success code
  */
-err_t start_command_run(int argc, char **argv, char *file_state_name, err_t (*next_step)(int, bake_bpace_o *));
+err_t start_command_run(int argc, char **argv, const char *file_state_name, err_t (*next_step)(int, bake_bpace_o *));
 
 /**
  * @param argc - argument count

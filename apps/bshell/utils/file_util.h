@@ -11,7 +11,7 @@
  * @param file_name
  * @return file_name plus TMP_FILE_ENDING
  */
-char *get_full_file_name(char *file_name);
+char *get_full_file_name(const char *file_name);
 /**
  *
  * @param in - reference to file where we will keep our opened file to use and close it later
@@ -28,7 +28,7 @@ int read_security_level_from_file(char *file_name, int *l);
  * @param l - security level
  * @return code of error or success code
  */
-int write_bpace_info_to_file(char *file_name, bake_bpace_o *what, int l);
+int write_bpace_info_to_file(const char *file_name, bake_bpace_o *what, int l);
 /**
  * @brief Reading Ra, Rb(or V instead of both R), U(Ua or Ub) and l to binary file.
  * @param in - reference to file

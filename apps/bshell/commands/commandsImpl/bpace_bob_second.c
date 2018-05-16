@@ -7,8 +7,13 @@
 #include <bpace_util.h>
 #include <command.h>
 #include <string_util.h>
-#include <malloc.h>
 #include <bee2/core/err.h>
+
+#ifndef OS_APPLE
+    #include <malloc.h>
+#else
+    #include <stdlib.h>
+#endif
 
 int on_success(octet *out, bake_bpace_o *state, int l) {
     printAnswer("Fourth step out: %s\n", out, (size_t) SIZE_OF_BOB_SECOND_MESSAGE(l));

@@ -15,13 +15,13 @@ static const int PARAMETERS_STARTS_WITH_LENGTH = 1;
 static const int EQUALS_RETURN = 0;
 static const int PARAMETERS_STARTS_FROM_POSITION = 2;
 
-bool is_line_start_with(char *line, char *with) {
+bool is_line_start_with(char *line, const char *with) {
     return EQUALS_RETURN == strncmp(line, with, strlen(with));
 }
 
 char *get_command_name(char **argv) {
     char *command = argv[COMMAND_PLACE];
-    if (!is_line_start_with(command, (char *) COMMAND_STARTS_WITH)) {
+    if (!is_line_start_with(command, COMMAND_STARTS_WITH)) {
         printf("Please, input command as first parameter and start it with %s\n", COMMAND_STARTS_WITH);
         return NULL;
     }
@@ -29,9 +29,10 @@ char *get_command_name(char **argv) {
 }
 
 char *get_argument_value(int argc, char **argv, const char *argument_name, bool isOptional) {
-    for (int i = PARAMETERS_STARTS_FROM_POSITION; i < argc; i += 2) {
+    int i;
+    for (i = PARAMETERS_STARTS_FROM_POSITION; i < argc; i += 2) {
         char *arg = argv[i];
-        if (!is_line_start_with(arg, (char *) PARAMETERS_STARTS_WITH)) {
+        if (!is_line_start_with(arg, PARAMETERS_STARTS_WITH)) {
             printf("Please, start all parameters with %s\n", PARAMETERS_STARTS_WITH);
             return NULL;
         }

@@ -2,14 +2,18 @@
 // Created by Maria Chmyreva on 3/11/18.
 //
 
-
 #include <command.h>
 #include <bee2/defs.h>
 #include <bee2/crypto/bake.h>
-#include <malloc.h>
 #include <bee2/core/err.h>
 #include <bpace_util.h>
 #include "../../constants.h"
+
+#ifndef OS_APPLE
+    #include <malloc.h>
+#else
+    #include <stdlib.h>
+#endif
 
 err_t second_step_run(int l, bake_bpace_o *state) {
     size_t size_of_bob_first_message = (size_t) SIZE_OF_BOB_FIRST_MESSAGE(l);
@@ -21,7 +25,7 @@ err_t second_step_run(int l, bake_bpace_o *state) {
 }
 
 int bpace_bob_start_run(int argc, char **argv) {
-    return start_command_run(argc, argv, (char *) FILE_STATE_BOB_NAME, second_step_run);
+    return start_command_run(argc, argv, FILE_STATE_BOB_NAME, second_step_run);
 }
 
 const Command bpace_bob_start = {
