@@ -93,7 +93,7 @@ bake_bpace_o *get_state(char *password, int l) {
 };
 
 
-bake_bpace_o *get_state_from_file(char *password, char *file_state_name, int *l) {
+bake_bpace_o *get_state_from_file(char *password, const char *file_state_name, int *l) {
     bake_bpace_o *state;
     read_security_level_from_file(file_state_name, l);
     state = get_state(password, *l);
@@ -114,12 +114,12 @@ void printAnswer(const char *preface, void *answer, size_t size) {
  * @param key
  * @param file_state_name
  */
-void on_success_final_step(octet key[], char *file_state_name) {
+void on_success_final_step(octet key[], const char *file_state_name) {
     printAnswer("Common key is %s\n", key, KEY_SIZE);
     remove(get_full_file_name(file_state_name));
 }
 
-err_t final_step_run(bake_bpace_o *state, char *file_state_name) {
+err_t final_step_run(bake_bpace_o *state, const char *file_state_name) {
     octet key[KEY_SIZE];
     err_t code = bakeBPACEStepG(key, state);
     CODE_CHECK(code, on_success_final_step(key, file_state_name))

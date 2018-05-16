@@ -19,7 +19,7 @@ char *get_full_file_name(const char *file_name);
  * @param l - reference to int where we will save security level from file. Must be passed by reference
  * @return code of error or success code
  */
-int read_security_level_from_file(char *file_name, int *l);
+int read_security_level_from_file(const char *file_name, int *l);
 /**
  * @brief Writing Ra, Rb(or V instead of both R), U(Ua or Ub) and l to binary file.
  *        Firstly l then others fields from 'what'.
@@ -34,6 +34,6 @@ int write_bpace_info_to_file(const char *file_name, bake_bpace_o *what, int l);
  * @param in - reference to file
  * @param what - state of bpace where fields will be saved
  */
-int read_state_from_file(char *file_name, bake_bpace_o *what);
+int read_state_from_file(const char *file_name, bake_bpace_o *what);
 
 #endif //BEE2_FILE_UTIL_H

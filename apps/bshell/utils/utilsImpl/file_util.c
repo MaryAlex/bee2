@@ -48,20 +48,27 @@ int write_bpace_info_to_file(const char *file_name, bake_bpace_o *what, int l) {
     return SUCCESS_CODE;
 }
 
-int read_security_level_from_file(char *file_name, int *l) {
+void fread_with_check(FILE *in, size_t size, void *to) {
+    size_t objects_number = 1;
+    if (fread(to, size, objects_number, in) != objects_number) {
+        printf("Some error appear during reading from file");
+    }
+}
+
+int read_security_level_from_file(const char *file_name, int *l) {
     FILE *in;
     NULL_CHECK(in = get_opened_file(file_name, "r"))
-    fread(l, sizeof(int), 1, in);
+    fread_with_check(in, sizeof(int), l);
     fclose(in);
     return SUCCESS_CODE;
 }
 
-int read_state_from_file(char *file_name, bake_bpace_o *what) {
+int read_state_from_file(const char *file_name, bake_bpace_o *what) {
     FILE *in;
     NULL_CHECK(in = get_opened_file(file_name, "r"))
     fseek(in, sizeof(int), SEEK_SET);
-    fread(what->R, sizeof(octet) * what->ec->f->no, 1, in);
-    fread(what->u, sizeof(word) * what->ec->f->n, 1, in);
+    fread_with_check(in, sizeof(octet) * what->ec->f->no, what->R);
+    fread_with_check(in, sizeof(word) * what->ec->f->n, what->u);
     fclose(in);
     return SUCCESS_CODE;
 }

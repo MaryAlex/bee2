@@ -5,6 +5,7 @@
 #ifndef BEE2_CONSTANTS_H
 #define BEE2_CONSTANTS_H
 
+#include <stdio.h>
 #include <bee2/math/ec.h>
 #include <bee2/crypto/bake.h>
 

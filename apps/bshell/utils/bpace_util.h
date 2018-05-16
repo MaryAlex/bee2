@@ -26,7 +26,7 @@ bake_bpace_o *get_state(char *password, int l);
  * @param l - reference to int where we will save security level from file. Must be passed by reference
  * @return Initialized bpace state
  */
-bake_bpace_o *get_state_from_file(char *password, char *file_state_name, int *l);
+bake_bpace_o *get_state_from_file(char *password, const char *file_state_name, int *l);
 
 /**
  * @brief Call bakeBPACEStepG. Print common key. Remove state file.
@@ -34,7 +34,7 @@ bake_bpace_o *get_state_from_file(char *password, char *file_state_name, int *l)
  * @param file_state_name
  * @return code of error or success code
  */
-err_t final_step_run(bake_bpace_o *state, char *file_state_name);
+err_t final_step_run(bake_bpace_o *state, const char *file_state_name);
 
 /**
  * @brief Initialize state. Call next_step. Write state to file.
