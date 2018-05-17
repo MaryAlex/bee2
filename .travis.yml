@@ -14,6 +14,31 @@ env:
 matrix:
   include:
     - os: linux
+      env:
+        - TRAVIS_DEBIAN_INCREMENT_VERSION_NUMBER="true"
+        - TRAVIS_DEBIAN_TARGET_DIR="./release"
+      sudo: required
+      services:
+        - docker
+      before_deploy:
+        - cd ..
+        - sudo apt-get install dpkg-dev
+        - wget -O- http://travis.debian.net/script.sh | sh -
+      deploy:
+        provider: releases
+        skip_cleanup: true
+        api_key:
+          secure: VYuFJ+jEyLLhrCARiDm1lPXX+HcwTcqW9xGXAEC3ZEFjW1lwBweAoe+uteNR56c95J7L42Gy9hRZeA7zipFDsMx3nGF9IfiMjcHUCwpEfVWJ0gkv1zFXltHif0qIEaOBAfABZTJVRxPfCq86AMSocOQO6q9U9HYUXoXk+e7wA6y/Zu8LRspV4tskszw9BWcbrqHDqxmkXjVyMZb1Clz+byWq9LYcstSVi0t2c9z9rDhEKzelm9VW13ybyxs1myoWVsMcb6JJ7oDMunRWqtaTjmn4Inf7enkBjp1UDIy1xeb9f5h0EahVzgS7BKHGml3IZzRWs1SmGT/BNglUuxXbklYKuaiA2q2UhOu9Zyn21iXy26Bc40gpITWYF+zvN9iaBYqrHNIeNvwuOBSoN9fxXDR6bBsToUAzmuNuhCfXko3DvCStju8Gf2lVqU3d5gNWSXaN+h6eIa77XTfMTNUHREO5Gh7EK8rjRQVEhrGYJhWUyCePbmjvydGEyeA6UQEqcidyyjhjP9nF9Xds9rDi3ole/tq0mE/EDoXLehXckMW5u8J8P74QrRLpgyuLWUM72bmm9KOY6fb4BVfpJRf0A6VR40nY0rhuzuwM/dGSfACrZnjQGJMSizTQJ4aGE92pLRBaK2rKZrvXjE+xM07rk+tbFbJMtbxkB+TqdiCYYnc=
+        file_glob: true
+        file:
+         - release/*.deb
+         - release/*.tar.xz
+         - release/*.dsc
+        on:
+          tags: true
+          repo: MaryAlex/bee2
+          branch: master
+    - os: linux
       compiler: gcc
       env:
       - COVERITY_SCAN_PROJECT_NAME="$TRAVIS_REPO_SLUG"
@@ -25,22 +50,6 @@ matrix:
     - os: linux
       compiler: gcc
       env: BUILD_TYPE="Release" BUILD_FAST="ON"
-      services:
-        - docker
-      before_deploy:
-        - cd ..
-        - sudo apt-get install dpkg-dev
-        - sudo apt-get install cmake
-        - git branch upstream
-        - wget -O- http://travis.debian.net/script.sh | sh -
-      deploy:
-        provider: releases
-        api_key:
-          secure: VYuFJ+jEyLLhrCARiDm1lPXX+HcwTcqW9xGXAEC3ZEFjW1lwBweAoe+uteNR56c95J7L42Gy9hRZeA7zipFDsMx3nGF9IfiMjcHUCwpEfVWJ0gkv1zFXltHif0qIEaOBAfABZTJVRxPfCq86AMSocOQO6q9U9HYUXoXk+e7wA6y/Zu8LRspV4tskszw9BWcbrqHDqxmkXjVyMZb1Clz+byWq9LYcstSVi0t2c9z9rDhEKzelm9VW13ybyxs1myoWVsMcb6JJ7oDMunRWqtaTjmn4Inf7enkBjp1UDIy1xeb9f5h0EahVzgS7BKHGml3IZzRWs1SmGT/BNglUuxXbklYKuaiA2q2UhOu9Zyn21iXy26Bc40gpITWYF+zvN9iaBYqrHNIeNvwuOBSoN9fxXDR6bBsToUAzmuNuhCfXko3DvCStju8Gf2lVqU3d5gNWSXaN+h6eIa77XTfMTNUHREO5Gh7EK8rjRQVEhrGYJhWUyCePbmjvydGEyeA6UQEqcidyyjhjP9nF9Xds9rDi3ole/tq0mE/EDoXLehXckMW5u8J8P74QrRLpgyuLWUM72bmm9KOY6fb4BVfpJRf0A6VR40nY0rhuzuwM/dGSfACrZnjQGJMSizTQJ4aGE92pLRBaK2rKZrvXjE+xM07rk+tbFbJMtbxkB+TqdiCYYnc=
-        file: ''
-        on:
-          repo: MaryAlex/bee2
-          branch: master
     - os: osx
       compiler: clang
       env: BUILD_TYPE="Release" BUILD_FAST="OFF"
