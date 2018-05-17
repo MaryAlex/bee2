@@ -36,7 +36,6 @@ matrix:
          - release/*.tar.xz
          - release/*.dsc
         on:
-          tags: true
           repo: MaryAlex/bee2
           branch: master
     - os: linux
