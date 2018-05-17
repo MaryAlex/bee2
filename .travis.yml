@@ -25,13 +25,12 @@ matrix:
     - os: linux
       compiler: gcc
       env: BUILD_TYPE="Release" BUILD_FAST="ON"
+      sudo: required
       services:
         - docker
       before_deploy:
         - cd ..
         - sudo apt-get install dpkg-dev
-        - sudo apt-get install cmake
-        - git branch upstream
         - wget -O- http://travis.debian.net/script.sh | sh -
       deploy:
         provider: releases
