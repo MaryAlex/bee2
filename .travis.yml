@@ -20,6 +20,7 @@ matrix:
       - COVERITY_SCAN_BRANCH_PATTERN="master"
       - COVERITY_SCAN_BUILD_COMMAND_PREPEND="cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_FAST=ON"
       - COVERITY_SCAN_BUILD_COMMAND="make"
+      - TRAVIS_DEBIAN_DERIVATIVE="ubuntu"
       script:
       - curl -s 'https://scan.coverity.com/scripts/travisci_build_coverity_scan.sh' | bash || true
     - os: linux
