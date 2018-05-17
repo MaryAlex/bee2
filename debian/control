@@ -1,7 +1,7 @@
 Source: bee2
 Priority: optional
 Maintainer: root <root@localhost.localdomain>
-Build-Depends: debhelper (>= 10) cmake
+Build-Depends: debhelper (>= 10), cmake
 Standards-Version: 4.1.2
 Section: libs
 Homepage: <insert the upstream URL, if relevant>
