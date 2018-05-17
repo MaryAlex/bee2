@@ -24,6 +24,8 @@ matrix:
         - cd ..
         - sudo apt-get install dpkg-dev
         - wget -O- http://travis.debian.net/script.sh | sh -
+        - pwd
+        - ls
       deploy:
         provider: releases
         skip_cleanup: true
