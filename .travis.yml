@@ -6,7 +6,6 @@ language: c
 branches:
   only:
     - master
-    - /v\d+\.\d+\.\d+/
 
 env:
   global:
@@ -16,8 +15,8 @@ matrix:
   include:
     - os: linux
       env:
-        - TRAVIS_DEBIAN_INCREMENT_VERSION_NUMBER="true"
         - TRAVIS_DEBIAN_TARGET_DIR="./release"
+        - LIBRARY_VERSION="v1.1.0"
       sudo: required
       services:
         - docker
@@ -25,8 +24,7 @@ matrix:
         - cd ..
         - sudo apt-get install dpkg-dev
         - wget -O- http://travis.debian.net/script.sh | sh -
-      if:
-        tag IS blank
+        - git tag ${LIBRARY_VERSION}
       deploy:
         provider: releases
         skip_cleanup: true

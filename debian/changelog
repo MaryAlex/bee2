@@ -3,3 +3,9 @@ bee2 (1.0.0) unstable; urgency=medium
   * Initial Release.
 
  -- root <root@localhost.localdomain>  Thu, 17 May 2018 03:27:53 +0300
+
+ bee2 (1.1.0) unstable; urgency=medium
+
+  * Check release.
+
+ -- root <root@localhost.localdomain>  Thu, 17 May 2018 03:27:53 +0300
