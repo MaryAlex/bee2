@@ -1,0 +1,24 @@
+Source: bee2
+Priority: optional
+Maintainer: root <root@localhost.localdomain>
+Build-Depends: debhelper (>= 10)
+Standards-Version: 4.1.2
+Section: libs
+Homepage: <insert the upstream URL, if relevant>
+#Vcs-Git: https://anonscm.debian.org/git/collab-maint/bee2.git
+#Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/bee2.git
+
+Package: bee2-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: bee2 (= ${binary:Version}), ${misc:Depends}
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
+
+Package: bee2
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
