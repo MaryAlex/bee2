@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
     }
     init_commands();
     if (ERROR_CODE == execute_command(command, argc, argv)) {
-        printf("Smth go wrong, command not done :(");
+        printf("Smth go wrong, command not done");
         return ERROR_CODE;
     }
     return 0;
