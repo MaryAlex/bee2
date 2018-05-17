@@ -25,7 +25,7 @@ matrix:
         - sudo apt-get install dpkg-dev
         - wget -O- http://travis.debian.net/script.sh | sh -
         - cd release
-        - export RELEASE_TAR_FILE=$(ls *.tar.gz)
+        - export RELEASE_TAR_FILE=$(ls *.tar.xz)
         - export RELEASE_DSC_FILE=$(ls *.dsc)
         - export RELEASE_DEB_FILE=$(ls *.deb)
         - cd ..
