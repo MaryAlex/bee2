@@ -13,9 +13,10 @@ int bpace_bob_second_run(int argc, char **argv) {
 const Command bpace_bob_second = {
         .name = "bpaceBobSecond",
         .description = "Run final steps of bpace from Bob side. Removes state file for Bob.\n"
-                       "Parameters:\n"
-                       "\tpassword - common password between Alice and Bob,\n"
-                       "\tin - message that Bob received from Alice.\n"
+                       BELOW_GOES_PARAMETERS_DESC
+                       PASSWORD_DESC
+                       IN_TO_BOB_FROM_ALICE_DESC
+                       USER_ID_DESC
                        "Output: message that need to be sended to Alice and common key.",
         .run = &bpace_bob_second_run,
         .is_random_needed = true

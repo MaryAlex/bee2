@@ -31,9 +31,10 @@ int bpace_bob_start_run(int argc, char **argv) {
 const Command bpace_bob_start = {
         .name = "bpaceBobStart",
         .description = "Run and init bpace from Bob side. Creates state file for Bob.\n"
-                       "Parameters:\n"
-                       "\tpassword - common password between Alice and Bob.\n"
-                       "\tl - (Optional. Default value = 128) security level Can be only one of this: {128, 192, 256}.\n"
+                       BELOW_GOES_PARAMETERS_DESC
+                       PASSWORD_DESC
+                       SECURITY_LEVEL_DESC
+                       USER_ID_DESC
                        "Output: message that need to be sended to Alice.",
         .run = &bpace_bob_start_run,
         .is_random_needed = true

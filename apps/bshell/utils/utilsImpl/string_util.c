@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <memory.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include "../../constants.h"
 
 // We ask to input command as first parameter
 static const int COMMAND_PLACE = 1;
@@ -34,7 +36,7 @@ char *get_argument_value(int argc, char **argv, const char *argument_name, bool 
         char *arg = argv[i];
         if (!is_line_start_with(arg, PARAMETERS_STARTS_WITH)) {
             printf("Please, start all parameters with %s\n", PARAMETERS_STARTS_WITH);
-            return NULL;
+            exit(NO_REQUIRED_PARAMETERS_ERROR_CODE);
         }
         if (EQUALS_RETURN == strcmp((arg + PARAMETERS_STARTS_WITH_LENGTH), argument_name)) {
             // Value after key
@@ -43,6 +45,7 @@ char *get_argument_value(int argc, char **argv, const char *argument_name, bool 
     }
     if (!isOptional) {
         printf("There is no such argument: %s\n", argument_name);
+        exit(NO_REQUIRED_PARAMETERS_ERROR_CODE);
     }
     return NULL;
 }

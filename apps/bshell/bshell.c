@@ -8,6 +8,8 @@
 #include <command.h>
 #include "constants.h"
 
+// TODO: argc and argv goes as parameters in every function. Bad. Need to be refactored.
+
 int main(int argc, char **argv) {
     char *command;
     // One for name of program

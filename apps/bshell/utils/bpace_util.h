@@ -20,20 +20,24 @@ bake_bpace_o *get_state(char *password, int l);
  * @brief Do memory allocation for bpace state and other structs that can be needed.
  *        Security level takes from file with name file_state_name.
  *        Then init states Ra, Rb(or V instead both R) and U(Ua or Ub) from the same file.
+ * @param argc - argument count
+ * @param argv - argument vector
  * @param password
  * @param file_state_name
  * @param l - reference to int where we will save security level from file. Must be passed by reference
  * @return Initialized bpace state
  */
-bake_bpace_o *get_state_from_file(char *password, const char *file_state_name, int *l);
+bake_bpace_o *get_state_from_file(int argc, char **argv, char *password, const char *file_state_name, int *l);
 
 /**
  * @brief Call bakeBPACEStepG. Print common key. Remove state file.
+ * @param argc - argument count
+ * @param argv - argument vector
  * @param state
  * @param file_state_name
  * @return code of error or success code
  */
-err_t final_step_run(bake_bpace_o *state, const char *file_state_name);
+err_t final_step_run(int argc, char **argv, bake_bpace_o *state, const char *file_state_name);
 
 /**
  * @brief Initialize state. Call next_step. Write state to file.
