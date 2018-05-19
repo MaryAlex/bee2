@@ -1,8 +1,9 @@
-bee2 (1.6.4) UNRELEASED; urgency=medium
+bee2 (1.6.5) UNRELEASED; urgency=medium
 
   * Smth 
+  * Removed some option files
 
- -- root <root@localhost.localdomain>  Fri, 18 May 2018 02:27:36 +0300
+ -- root <root@localhost.localdomain>  Sat, 19 May 2018 01:28:56 +0300
 
 bee2 (1.0.0) unstable; urgency=medium
 
