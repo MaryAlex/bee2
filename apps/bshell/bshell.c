@@ -4,13 +4,11 @@
  * @note If you want to add more commands just add there .h/.c files and add function to array in "init_commands" function
  */
 #include <stdio.h>
-#include <bpace_bob_start.h>
-#include <bpace_bob_second.h>
-#include <bee2/core/rng.h>
-#include <memory.h>
-#include "string_util.h"
-#include "commands/command.h"
+#include <string_util.h>
+#include <command.h>
 #include "constants.h"
+
+// TODO: argc and argv goes as parameters in every function. Bad. Need to be refactored.
 
 int main(int argc, char **argv) {
     char *command;

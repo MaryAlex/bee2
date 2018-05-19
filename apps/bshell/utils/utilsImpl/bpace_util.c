@@ -11,7 +11,6 @@
 #include <file_util.h>
 #include <string_util.h>
 #include <bee2/core/hex.h>
-#include <stdio.h>
 #include "../../constants.h"
 
 static const char *possible_curve_names[] =
@@ -92,15 +91,28 @@ bake_bpace_o *get_state(char *password, int l) {
     return NULL;
 };
 
-
-bake_bpace_o *get_state_from_file(char *password, const char *file_state_name, int *l) {
+/**
+ * @brief Get state to current security level and init it from file
+ * @param argc - argument count
+ * @param argv - argument vector
+ * @param password
+ * @param file_state_name
+ * @param l - current security level
+ * @return initialized state
+ */
+bake_bpace_o *init_state_from_file(int argc, char **argv, char *password, const char *file_state_name, const int l) {
     bake_bpace_o *state;
-    read_security_level_from_file(file_state_name, l);
-    state = get_state(password, *l);
+    state = get_state(password, l);
     if (NULL != state) {
-        read_state_from_file(file_state_name, state);
+        read_state_from_file(argc, argv, file_state_name, state);
     }
     return state;
+}
+
+bake_bpace_o *get_state_from_file(int argc, char **argv, char *password, const char *file_state_name, int *l) {
+    err_t code = read_security_level_from_file(argc, argv, file_state_name, l);
+    CODE_CHECK_WITH_RETURN(code, init_state_from_file(argc, argv, password, file_state_name, *l))
+    exit(FILE_READ_ERROR_CODE);
 };
 
 void printAnswer(const char *preface, void *answer, size_t size) {
@@ -111,18 +123,20 @@ void printAnswer(const char *preface, void *answer, size_t size) {
 
 /**
  * @brief Print common key and remove file
+ * @param argc - argument count
+ * @param argv - argument vector
  * @param key
  * @param file_state_name
  */
-void on_success_final_step(octet key[], const char *file_state_name) {
+void on_success_final_step(int argc, char **argv, octet key[], const char *file_state_name) {
     printAnswer("Common key is %s\n", key, KEY_SIZE);
-    remove(get_full_file_name(file_state_name));
+    remove(get_full_file_name(argc, argv, file_state_name));
 }
 
-err_t final_step_run(bake_bpace_o *state, const char *file_state_name) {
+err_t final_step_run(int argc, char **argv, bake_bpace_o *state, const char *file_state_name) {
     octet key[KEY_SIZE];
     err_t code = bakeBPACEStepG(key, state);
-    CODE_CHECK(code, on_success_final_step(key, file_state_name))
+    CODE_CHECK(code, on_success_final_step(argc, argv, key, file_state_name))
     return code;
 }
 
@@ -156,9 +170,9 @@ err_t start_command_run(int argc, char **argv, const char *file_state_name, err_
     char *password = get_required_argument_value(argc, argv, PASSWORD_PARAMETER);
     int l = get_security_level_parameter(argc, argv);
     bake_bpace_o *state = get_state(password, l);
-    NULL_CHECK(state)
+    DEFAULT_NULL_CHECK(state)
     code = next_step(l, state);
-    write_bpace_info_to_file(file_state_name, state, l);
+    write_bpace_info_to_file(argc, argv, file_state_name, state, l);
     free(state);
     return code;
 }
@@ -168,5 +182,36 @@ char *get_in_parameter(int argc, char **argv) {
     char *dest = malloc(strlen(in));
     hexTo(dest, in);
     return dest;
+}
+
+/**
+ * @brief To print out before do final step if it exist
+ * @return code of error or success code
+ */
+int on_success(int argc, char **argv, octet *out, bake_bpace_o *state, int l, const char *file_state_name) {
+    if (NULL != out) {
+        // Only Bob side have message to send in second step
+        printAnswer("Send this: %s\n", out, (size_t) SIZE_OF_BOB_SECOND_MESSAGE(l));
+    }
+    return final_step_run(argc, argv, state, file_state_name);
+}
+
+err_t second_command_run(int argc, char **argv,
+                         const char *file_state_name,
+                         err_t (*current_step)(octet [], const octet [], void *),
+                         bool is_with_message) {
+    int l;
+    err_t code;
+    octet *out = NULL;
+    char *in = get_in_parameter(argc, argv);
+    char *password = get_required_argument_value(argc, argv, PASSWORD_PARAMETER);
+    bake_bpace_o *state = get_state_from_file(argc, argv, password, file_state_name, &l);
+    if (is_with_message) {
+        // Only Bob side have message to send in second step
+        out = malloc((size_t) SIZE_OF_BOB_SECOND_MESSAGE(l));
+    }
+    code = current_step(out, (const octet *) in, state);
+    CODE_CHECK_WITH_RETURN(code, on_success(argc, argv, out, state, l, file_state_name))
+    return ERROR_CODE;
 }
 

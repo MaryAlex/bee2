@@ -3,8 +3,7 @@
 //
 
 #include <stdio.h>
-#include "../command.h"
-#include "../help.h"
+#include <command.h>
 #include "../../constants.h"
 
 int print_all() {
