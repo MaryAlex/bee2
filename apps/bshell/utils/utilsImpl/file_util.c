@@ -4,7 +4,6 @@
 
 #include <bee2/crypto/bake.h>
 #include <memory.h>
-#include <stdio.h>
 #include "../../constants.h"
 
 #ifndef OS_APPLE

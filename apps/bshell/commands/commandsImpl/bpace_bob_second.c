@@ -2,33 +2,12 @@
 // Created by Maria Chmyreva on 3/21/18.
 //
 
-#include <bee2/defs.h>
-#include <bee2/crypto/bake.h>
 #include <bpace_util.h>
 #include <command.h>
-#include <string_util.h>
-#include <bee2/core/err.h>
-
-#ifndef OS_APPLE
-    #include <malloc.h>
-#else
-    #include <stdlib.h>
-#endif
-
-int on_success(octet *out, bake_bpace_o *state, int l) {
-    printAnswer("Fourth step out: %s\n", out, (size_t) SIZE_OF_BOB_SECOND_MESSAGE(l));
-    return final_step_run(state, FILE_STATE_BOB_NAME);
-}
+#include "../../constants.h"
 
 int bpace_bob_second_run(int argc, char **argv) {
-    int l;
-    char *in = get_in_parameter(argc, argv);
-    char *password = get_required_argument_value(argc, argv, PASSWORD_PARAMETER);
-    bake_bpace_o *state = get_state_from_file(password, FILE_STATE_BOB_NAME, &l);
-    octet *out = malloc((size_t) SIZE_OF_BOB_SECOND_MESSAGE(l));
-    err_t code = bakeBPACEStep4(out, (const octet *) in, state);
-    CODE_CHECK_WITH_RETURN(code, on_success(out, state, l))
-    return ERROR_CODE;
+    return second_command_run(argc, argv, FILE_STATE_BOB_NAME, bakeBPACEStep4, true);
 }
 
 const Command bpace_bob_second = {

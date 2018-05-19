@@ -2,9 +2,8 @@
 // Created by Maria Chmyreva on 3/21/18.
 //
 
-#include <bee2/defs.h>
 #include <bee2/crypto/bake.h>
-#include "../constants.h"
+#include <stdbool.h>
 
 #ifndef BEE2_BPACE_UTIL_H
 #define BEE2_BPACE_UTIL_H
@@ -52,6 +51,7 @@ err_t start_command_run(int argc, char **argv, const char *file_state_name, err_
  * @return -in parameter
  */
 char *get_in_parameter(int argc, char **argv);
+
 /**
  * @param argc - argument count
  * @param argv - argument vector
@@ -66,5 +66,19 @@ int get_security_level_parameter(int argc, char **argv);
  * @param size - count of answer's bytes
  */
 void printAnswer(const char *preface, void *answer, size_t size);
+
+/**
+ * @brief Read state from file and remove one. Call current_step.
+ * @param argc - argument count
+ * @param argv - argument vector
+ * @param file_state_name
+ * @param current_step - second step in bpace protocol for current side
+ * @param is_with_message - to know must we allocate memory for output message or not
+ * @return code of error or success code
+ */
+err_t second_command_run(int argc, char **argv,
+                         const char *file_state_name,
+                         err_t (*current_step)(octet [], const octet [], void *),
+                         bool is_with_message);
 
 #endif //BEE2_BPACE_UTIL_H

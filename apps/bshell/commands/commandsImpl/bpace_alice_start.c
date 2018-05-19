@@ -6,7 +6,6 @@
 #include <bee2/crypto/bake.h>
 #include <command.h>
 #include <bpace_util.h>
-#include <stdio.h>
 #include <bee2/core/err.h>
 #include "../../constants.h"
 

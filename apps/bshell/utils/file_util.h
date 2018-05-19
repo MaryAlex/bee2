@@ -5,7 +5,6 @@
 #ifndef BEE2_FILE_UTIL_H
 #define BEE2_FILE_UTIL_H
 
-#include "../constants.h"
 /**
  *
  * @param file_name

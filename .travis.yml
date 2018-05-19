@@ -6,6 +6,7 @@ language: c
 branches:
   only:
     - master
+    - dev
 
 env:
   global:
@@ -38,6 +39,9 @@ matrix:
         on:
           repo: MaryAlex/bee2
           branch: master
+        branches:
+          except:
+            - dev
     - os: linux
       compiler: gcc
       env:

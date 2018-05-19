@@ -5,7 +5,6 @@
 #ifndef BSHELL_BPACE_START_H
 #define BSHELL_BPACE_START_H
 
-#include <bee2/defs.h>
 #include "command.h"
 
 /**

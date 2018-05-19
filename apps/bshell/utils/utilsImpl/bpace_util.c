@@ -11,7 +11,6 @@
 #include <file_util.h>
 #include <string_util.h>
 #include <bee2/core/hex.h>
-#include <stdio.h>
 #include "../../constants.h"
 
 static const char *possible_curve_names[] =
@@ -168,5 +167,36 @@ char *get_in_parameter(int argc, char **argv) {
     char *dest = malloc(strlen(in));
     hexTo(dest, in);
     return dest;
+}
+
+/**
+ * @brief To print out before do final step if it exist
+ * @return code of error or success code
+ */
+int on_success(octet *out, bake_bpace_o *state, int l, const char *file_state_name) {
+    if (NULL != out) {
+        // Only Bob side have message to send in second step
+        printAnswer("Send this: %s\n", out, (size_t) SIZE_OF_BOB_SECOND_MESSAGE(l));
+    }
+    return final_step_run(state, file_state_name);
+}
+
+err_t second_command_run(int argc, char **argv,
+                         const char *file_state_name,
+                         err_t (*current_step)(octet [], const octet [], void *),
+                         bool is_with_message) {
+    int l;
+    err_t code;
+    octet *out = NULL;
+    char *in = get_in_parameter(argc, argv);
+    char *password = get_required_argument_value(argc, argv, PASSWORD_PARAMETER);
+    bake_bpace_o *state = get_state_from_file(password, file_state_name, &l);
+    if (is_with_message) {
+        // Only Bob side have message to send in second step
+        out = malloc((size_t) SIZE_OF_BOB_SECOND_MESSAGE(l));
+    }
+    code = current_step(out, (const octet *) in, state);
+    CODE_CHECK_WITH_RETURN(code, on_success(out, state, l, file_state_name))
+    return ERROR_CODE;
 }
 
