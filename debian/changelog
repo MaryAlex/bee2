@@ -1,3 +1,9 @@
+bee2 (1.7.1) UNRELEASED; urgency=medium
+
+  * Remove useless package
+
+ -- Maria Chmyreva <maria.chmyreva@gmail.com>  Sun, 20 May 2018 03:02:41 +0300
+
 bee2 (1.7.0) UNRELEASED; urgency=medium
 
   * Small refactoring

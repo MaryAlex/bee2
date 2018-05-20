@@ -17,7 +17,7 @@ matrix:
     - os: linux
       env:
         - TRAVIS_DEBIAN_TARGET_DIR="./release"
-        - LIBRARY_VERSION="v1.7.0"
+        - LIBRARY_VERSION="v1.7.1"
       sudo: required
       services:
         - docker
