@@ -17,7 +17,10 @@ matrix:
     - os: linux
       env:
         - TRAVIS_DEBIAN_TARGET_DIR="./release"
-        - LIBRARY_VERSION="v1.7.1"
+        - LIBRARY_VERSION="v1.7.2"
+      branches:
+        except:
+          - dev
       sudo: required
       services:
         - docker
@@ -39,9 +42,6 @@ matrix:
         on:
           repo: MaryAlex/bee2
           branch: master
-        branches:
-          except:
-            - dev
     - os: linux
       compiler: gcc
       env:

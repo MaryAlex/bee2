@@ -12,6 +12,7 @@
 
 int main(int argc, char **argv) {
     char *command;
+    int error_code;
     // One for name of program
     if (argc == 1) {
         printf("Please, input command u wanna use or --help.\n");
@@ -22,9 +23,10 @@ int main(int argc, char **argv) {
         return ERROR_CODE;
     }
     init_commands();
-    if (ERROR_CODE == execute_command(command, argc, argv)) {
-        printf("Smth go wrong, command not done");
+    error_code = execute_command(command, argc, argv);
+    if (SUCCESS_CODE != error_code) {
+        printf("Smth go wrong, command not done. Error code: %d\n", error_code);
         return ERROR_CODE;
     }
-    return 0;
+    return SUCCESS_CODE;
 }

@@ -201,6 +201,7 @@ err_t second_command_run(int argc, char **argv,
                          err_t (*current_step)(octet [], const octet [], void *),
                          bool is_with_message) {
     int l;
+    int out_size;
     err_t code;
     octet *out = NULL;
     char *in = get_in_parameter(argc, argv);
@@ -208,7 +209,8 @@ err_t second_command_run(int argc, char **argv,
     bake_bpace_o *state = get_state_from_file(argc, argv, password, file_state_name, &l);
     if (is_with_message) {
         // Only Bob side have message to send in second step
-        out = malloc((size_t) SIZE_OF_BOB_SECOND_MESSAGE(l));
+        out_size = SIZE_OF_BOB_SECOND_MESSAGE(l);
+        out = malloc((size_t) out_size);
     }
     code = current_step(out, (const octet *) in, state);
     CODE_CHECK_WITH_RETURN(code, on_success(argc, argv, out, state, l, file_state_name))
