@@ -44,7 +44,7 @@ char *get_argument_value(int argc, char **argv, const char *argument_name, bool 
         }
     }
     if (!isOptional) {
-        printf("There is no such argument: %s\n", argument_name);
+        printf("Please input next argument: %s\n", argument_name);
         exit(NO_REQUIRED_PARAMETERS_ERROR_CODE);
     }
     return NULL;

@@ -12,6 +12,7 @@
 #define ERROR_CODE 1
 #define NO_REQUIRED_PARAMETERS_ERROR_CODE 2
 #define FILE_READ_ERROR_CODE 3
+#define FILE_WRITE_ERROR_CODE 3
 #define SUCCESS_CODE 0
 
 #define OCTET_SIZE 8
@@ -54,9 +55,9 @@
     if (SUCCESS_CODE == (code)) {\
         (on_success);\
     } else if (ERR_BAD_POINT == (code)) {\
-        printf("Bad point error");\
+        printf("Bad point error\n");\
     } else if (ERR_BAD_INPUT == (code)) {\
-        printf("Bad input error");\
+        printf("Bad input error\n");\
     }  else {\
         printf("Some error appear during step: ===%d===\n", code);\
     }
@@ -68,9 +69,9 @@
     if (SUCCESS_CODE == (code)) {\
         return (return_value);\
     } else if (ERR_BAD_POINT == (code)) {\
-        printf("Bad point error");\
+        printf("Bad point error\n");\
     } else if (ERR_BAD_INPUT == (code)) {\
-        printf("Bad input error");\
+        printf("Bad input error\n");\
     } else {\
         printf("Some error appear during step: ===%d===\n", code);\
     }
